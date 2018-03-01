@@ -154,7 +154,7 @@ expand(){
           height: height,
           transform: `rotate(${rotation}deg)`
         }}
-        >
+      >
         <div style={{transform: `rotate(${morotation}deg)`}}>
           <FontAwesome onClick={()=>(this.rotateImage())} className="image-icon" name="sync-alt" title="rotate"/>
           <FontAwesome onClick ={()=>{this.removeImage(this.props.dto.id)}} className="image-icon" name="trash-alt" title="delete"/>

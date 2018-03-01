@@ -14,8 +14,8 @@ class Gallery extends React.Component {
     this.state = {
       images: [],
       galleryWidth: this.getGalleryWidth(),
-      galleryHeigh: this.getGalleryHeigh()
-
+      galleryHeigh: this.getGalleryHeigh(),
+      imageLength:100
     };
   }
 
@@ -37,9 +37,9 @@ class Gallery extends React.Component {
     }
   }
 
-
+//${this.state.imageNum}
   getImages(tag) {
-    const getImagesUrl = `services/rest/?method=flickr.photos.search&api_key=522c1f9009ca3609bcbaf08545f067ad&tags=${tag}&tag_mode=any&per_page=100&format=json&nojsoncallback=1`;
+    const getImagesUrl = `services/rest/?method=flickr.photos.search&api_key=522c1f9009ca3609bcbaf08545f067ad&tags=${tag}&tag_mode=any&per_page=${this.state.imageLength}&format=json&nojsoncallback=1`;
     const baseUrl = 'https://api.flickr.com/';
     axios({
       url: getImagesUrl,
@@ -68,17 +68,30 @@ class Gallery extends React.Component {
   }
 
 
+  updateImg(){
+    var newLength = this.state.imageLength + 100;
+    this.componentDidMount();
+    this.setState({
+      imageLength: newLength
+    });
+  }
+
+
+
+
   componentWillReceiveProps(props) {
     this.getImages(props.tag);
   }
 
   render() {
     return (
-
       <div className="gallery-root" >
         {this.state.images.map(dto => {
-          return <Image key={'image-' + dto.id} dto={dto} galleryWidth={this.state.galleryWidth} galleryHeigh={this.state.galleryHeigh}/>;
+          return <Image key={'image-' + dto.id} dto={dto} galleryWidth={this.state.galleryWidth} galleryHeigh={this.state.galleryHeigh} />;
         })}
+        <div>
+          <button onClick={()=>{this.updateImg()}} name="updateImg" title="updateImg"> expand more 100 pics</button>
+        </div>
       </div>
     );
   }
